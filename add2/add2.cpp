@@ -9,12 +9,13 @@
 #include <iostream>
 using namespace std;
 int main() {
-  int a, b;
+  int a, b = 100;
   // първо въвеждаме стойности
-  cout << "a = "; cin >> a;
-  cout << "b = "; cin >> b;
-  int c = a + b; // събираме числата
+  cout << "a, b = "; cin >> a >> b;
+  int c;
+  c = a + b; // събираме числата
   cout << "a + b = " << c << endl;
+  cout << a << " + " << b << " = " << c << endl;
   return 0;
 }
 
