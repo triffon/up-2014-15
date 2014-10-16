@@ -6,6 +6,8 @@
  */
 
 #include <iostream>
+#include <cmath>
+
 using namespace std;
 int digits() {
 	int a;
@@ -41,11 +43,86 @@ int chars() {
 	return 0;
 }
 
+int floats() {
+	// float f = 1e-10;
+	double f = 1e-10;
+	f = f / 1e100;
+	cout << f << endl;
 
+	// float g = 1.2;
+	// double g = 1.2;
+	// long double g = 1.2;
+	float g = 1.2;
+	g = g - 0.3;
+	g = g - 0.3;
+	g = g - 0.3;
+	g = g - 0.3;
+	bool b1 = g == 0;
+	cout << g << endl;
+	cout << "==0? " << b1 << endl;
+
+	const double EPS = 1e-4;
+
+	bool e1 = fabs(g) < EPS;
+	cout << "<EPS? " << e1 << endl;
+
+
+	cout << "---------" << endl;
+
+	float h = 1.25;
+	h = h - 0.25;
+	h = h - 0.25;
+	h = h - 0.25;
+	h = h - 0.25;
+	h = h - 0.25;
+	bool b2 = h == 0;
+	cout << h << endl;
+	cout << "==0? " << b2 << endl;
+
+	bool e2 = fabs(h) < EPS;
+	cout << "<EPS? " << e2 << endl;
+
+	return 0;
+}
+
+int conversions() {
+	bool b = true;
+	char c = 'A';
+	cout << b + c << endl;
+	cout << 2 + 3.7 << endl;
+	cout << 5 / 3 << endl;
+	double d = 5;
+	cout << d / 3 << endl;
+	cout << 5.0 / 3 << endl;
+	cout << (double)5 / 3 << endl;
+
+	cout << (char)69 << endl;
+
+	cout << (int)5.123 << endl;
+
+	cout << (bool)'A' << endl;
+	cout << (bool)'\0' << endl;
+
+	long egn = 9876543210;
+	cout << egn << endl;
+
+	short segn = egn;
+	cout << segn << endl;
+
+	unsigned short s1 = 50000;
+	unsigned short s2 = s1 * 2;
+	cout << s1 << ' ' << s2 << endl;
+
+	// (cout << egn) > (segn << endl);
+	cout << (egn > segn) << endl;
+	return 0;
+}
 
 int main() {
 	// digits();
-	chars();
+	// chars();
+	// floats();
+	conversions();
 	return 0;
 }
 
