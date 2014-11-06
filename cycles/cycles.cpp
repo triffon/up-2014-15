@@ -364,6 +364,90 @@ int triangle2() {
 	return 0;
 }
 
+int domino() {
+	/*
+	for(int i = 0; i <= 6; i++)
+		for(int j = 0; j <= i; j++)
+			cout << '[' << i << '|' << j << ']' << endl;
+			*/
+	int count = 0;
+	for(int i = 0; i <= 6; i++)
+		for(int j = i; j <= 6; j++) {
+			cout << '[' << i << '|' << j << ']' << endl;
+			count++;
+		}
+
+	cout << count << endl;
+	return 0;
+}
+
+int samedigits() {
+	int n;
+	cout << "n = "; cin >> n;
+	// за всяка цифра
+	int d = n, a = 0;
+	bool found = false;
+	while (d >= 10 && !found) {
+		// с поредната цифрата a == d % 10
+		a = d % 10;
+		// да проверим дали a се среща в n?
+		int e = d / 10;
+		while (e % 10 != a && e != 0)
+			// изтриваме последната цифра на e
+			e /= 10;
+		// e % 10 == a || e == 0
+
+		/*
+		if (e % 10 == a)
+			cout << "Цифрата " << a << " се повтаря!" << endl;
+		*/
+
+		// if (e % 10 == a)
+		if (e != 0)
+			found = true;
+
+		d /= 10;
+	}
+	// found == true || d < 10
+
+	if (found)
+		cout << "Цифрата " << a << " се повтаря!" << endl;
+	else
+		cout << "Няма повтарящи се цифри!" << endl;
+	return 0;
+}
+
+// проверява дали d се среща в n
+bool hasDigit(int n, int d);
+// проверява дали n има еднакви цифри
+bool sameDigits(int n);
+
+int samedigits_better() {
+	int n;
+	cout << "n = "; cin >> n;
+	// за всяка цифра
+	int d = n, a = 0, e = 0;
+	while (d >= 10 && e == 0) {
+		// с поредната цифрата a == d % 10
+		a = d % 10;
+		// да проверим дали a се среща в d / 10?
+		e = d / 10;
+		while (e % 10 != a && e != 0)
+			// изтриваме последната цифра на e
+			e /= 10;
+		// e % 10 == a || e == 0
+
+		d /= 10;
+	}
+	// e != 0 || d < 10
+
+	if (e != 0)
+		cout << "Цифрата " << a << " се повтаря!" << endl;
+	else
+		cout << "Няма повтарящи се цифри!" << endl;
+	return 0;
+}
+
 int main() {
 	/*
 	fact();
@@ -386,7 +470,9 @@ int main() {
 	// prime();
 	// print_clock();
 	// triangle1();
-	triangle2();
+	//triangle2();
+	//domino();
+	samedigits();
 	return 0;
 }
 
