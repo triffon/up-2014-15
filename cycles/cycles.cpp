@@ -326,6 +326,44 @@ int print_clock() {
 	return 0;
 }
 
+int triangle1() {
+	int n;
+	cout << "n = "; cin >> n;
+	for(int i = 1; i <= n; i++) {
+		// Извеждаме ред с номер i
+		// Трябва да изведем всички числа от 1 до i, вкл.
+		for(int j = 1; j <= i ; j++)
+			cout << j << ' ';
+		cout << endl;
+	}
+	return 0;
+}
+
+int triangle2() {
+	int n;
+	cout << "n = "; cin >> n;
+
+	// горна част
+	// for(int i = 1, k = 1; i <= n; i++, k += 2) {
+	for(int i = 1; i <= n; i++) {
+		// извеждаме ред с номер i от горната част
+		// извеждаме числата от k до i (намаляващи!)
+		for(int j = 2 * i - 1; j >= i; j--)
+			cout << j << ' ';
+		cout << endl;
+	}
+
+	// долна част
+	for(int i = 1; i <= n - 1; i++) {
+		// извеждаме ред с номер i от долната част
+		for(int j = 2 * n - i - 1; j >= n; j--)
+			cout << j << ' ';
+		cout << endl;
+	}
+
+	return 0;
+}
+
 int main() {
 	/*
 	fact();
@@ -346,7 +384,9 @@ int main() {
 	// digit5();
 	// digit5better();
 	// prime();
-	print_clock();
+	// print_clock();
+	// triangle1();
+	triangle2();
 	return 0;
 }
 
