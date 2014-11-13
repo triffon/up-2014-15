@@ -418,9 +418,37 @@ int samedigits() {
 }
 
 // проверява дали d се среща в n
-bool hasDigit(int n, int d);
+// без странични ефекти!
+bool hasDigit(int n, int d) {
+	if (n == 0)
+		return d == 0;
+	// n > 0 <--> в n има още цифри
+	// n % 10 != d <--> последната цифра на n не е d
+	while (n % 10 != d && n > 0)
+		// изтриваме последната цифра на n
+		n /= 10;
+	// n <= 0 <--> в n няма повече цифри
+	// n % 10 == d <--> последната цифра на n e равна на d
+	/*
+	if (n > 0)
+		return true;
+	else
+		return false;
+	*/
+	return n > 0;
+}
+
 // проверява дали n има еднакви цифри
-bool sameDigits(int n);
+// true <-> има две еднакви цифри
+// false <-> има само различни цифри
+bool sameDigits(int n) {
+	while (n >= 10 && !hasDigit(n / 10, n % 10))
+		n /= 10;
+	// hasDigit(остатъка от числото, поредната цифра)
+	// hasDigit(n / 10, n % 10)
+	// n < 10 <-> няма повече цифри
+	return n >= 10;
+}
 
 int samedigits_better() {
 	int n;
@@ -432,6 +460,7 @@ int samedigits_better() {
 		a = d % 10;
 		// да проверим дали a се среща в d / 10?
 		e = d / 10;
+		// да проверим дали a се среща в e?
 		while (e % 10 != a && e != 0)
 			// изтриваме последната цифра на e
 			e /= 10;
@@ -446,6 +475,40 @@ int samedigits_better() {
 	else
 		cout << "Няма повтарящи се цифри!" << endl;
 	return 0;
+}
+
+void hasDigitTest() {
+	int n, d;
+	cin >> n >> d;
+	cout << hasDigit(n, d) << endl;
+	cout << n << d << endl;
+}
+
+void test(bool ok) {
+	if (ok)
+		cout << "OK!" << endl;
+	else
+		cout << "FAIL!" << endl;
+}
+
+void hasDigitUnitTest() {
+	test(hasDigit(123, 1) == true);
+	test(hasDigit(120, 0) == true);
+	test(hasDigit(555555, 5) == true);
+	test(hasDigit(1287, 6) == false);
+	test(hasDigit(123, 0) == false);
+	test(hasDigit(555555, 7) == false);
+	test(hasDigit(0, 0) == true);
+}
+
+void sameDigitsUnitTest() {
+	test(sameDigits(123) == false);
+	test(sameDigits(1231) == true);
+	test(sameDigits(55555) == true);
+	test(sameDigits(5) == false);
+	test(sameDigits(0) == false);
+	test(sameDigits(1020) == true);
+	test(sameDigits(10000001) == true);
 }
 
 int main() {
@@ -472,7 +535,10 @@ int main() {
 	// triangle1();
 	//triangle2();
 	//domino();
-	samedigits();
+	// samedigits();
+	hasDigitTest();
+	hasDigitUnitTest();
+	sameDigitsUnitTest();
 	return 0;
 }
 
