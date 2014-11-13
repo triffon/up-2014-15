@@ -5,7 +5,9 @@
  *      Author: trifon
  */
 
+#include <cmath>
 #include <iostream>
+#include "functions.h"
 using namespace std;
 
 double square(double);
@@ -26,12 +28,35 @@ int readNumber(int from, int to) {
 	return n;
 }
 
+
+double triarea(double x1, double y1, double x2, double y2,
+				double x3, double y3) {
+	double a = distance(x1, y1, x2, y2);
+	double b = distance(x2, y2, x3, y3);
+	double c = distance(x1, y1, x3, y3);
+	return heron(a, b, c);
+}
+double distance(double x1, double y1, double x2, double y2) {
+	return sqrt(square(x2-x1)+square(y2-y1));
+}
+double heron(double a, double b, double c) {
+	double p = (a+b+c)/2;
+	return sqrt(p*(p-a)*(p-b)*(p-c));
+}
+
 double square(double x) {
 	return x * x;
 }
 
+void testArea() {
+	double x1, y1, x2, y2, x3, y3;
+	cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+	cout << "S = " << triarea(x1, y1, x2, y2, x3, y3) << endl;
+}
+
 int main() {
-	printSquared(readNumber(1, 5+5));
+	// printSquared(readNumber(1, 5+5));
+	testArea();
 	return 0;
 }
 
