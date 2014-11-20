@@ -87,6 +87,27 @@ void testArrays() {
 	else
 		cout << "Не е растяща" << endl;
 
+	for(int i = 0; i < n - 1; i++) {
+		// чертата е между i-1 и i елемент
+		// търсим най-малкия елемент отдясно на чертата
+		// и го разменяме с a[i]
+		// отдясно на чертата <-> i <= j < n
+		int imin = i;
+		for(int j = i + 1; j < n; j++)
+			if (a[j] < a[imin])
+				imin = j;
+		// min е най-малкият елемент отдясно на чертата
+		// трябва да разменим a[i] с a[imin]
+		int x = a[imin];
+		a[imin] = a[i];
+		a[i] = x;
+
+		for(int i = 0; i < n; i++)
+			cout << a[i] << ' ';
+		cout << endl;
+	}
+
+
 }
 
 
