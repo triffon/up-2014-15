@@ -33,7 +33,9 @@
      Например:
 
      *pig*   -> *igpay*
+
      *dog*   -> *ogday*
+
      *truck* -> *ucktray*
 
 
@@ -42,7 +44,9 @@
      Например:
      
      *owl*   -> *owlay*
+
      *urchin* -> *urchinway*
+
      *eagle* -> *eagleway*
 
 
