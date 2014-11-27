@@ -111,10 +111,60 @@ void countWords() {
 	cout << "Намерени са " << counter << " думи" << endl;
 }
 
+bool isDigit(char c) {
+	return c >= '0' && c <= '9';
+}
+
+int toDigit(char c) {
+	return c - '0';
+}
+
+int applyOperation(int left, char op, int right) {
+	switch(op) {
+	case '+':return left + right;
+	case '-':return left - right;
+	case '*':return left * right;
+	case '/':return left / right;
+	case '%':return left % right;
+	}
+	return left;
+}
+
+void calculator() {
+	char input[MAX];
+	cin.getline(input, MAX);
+	// 2+3-4*5/6%7=
+	// допускаме, че низът въведен коректно
+	int i = 0;
+	int result = 0; // резултатът до момента
+	int arg = 0; // последният аргумент
+	char op = '+'; // предишна операция
+	do {
+		if (isDigit(input[i])) {
+			// цифра
+			(arg *= 10) += toDigit(input[i]);
+		} else {
+			// операция
+			// 1. изпълняваме предишната операция
+			// върху result и arg
+			result = applyOperation(result, op, arg);
+			// 2. запомняме новата операция
+			op = input[i];
+			// 3. нулираме аргумента, за да можем да
+			// Натрупаме новите цифри отначало
+			arg = 0;
+		}
+		i++;
+	} while(input[i-1] != '=');
+	// input[i] == '='
+	cout << result << endl;
+}
+
 int main() {
 	// testStrings();
 	// palindrome();
-	countWords();
+	// countWords();
+	calculator();
 	return 0;
 }
 
