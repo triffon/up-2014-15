@@ -160,11 +160,23 @@ void calculator() {
 	cout << result << endl;
 }
 
+void testOverflow() {
+	char a[16] = "XXXXXXXXXXXXXXX";
+	char b[16] = "Hello, world!";
+	char c[16] = "YYYYYYYYYYYYYYY";
+	cout << a << endl << b << endl << c << endl << endl;
+	strcat(b, "!!!");
+	cout << a << endl << b << endl << c << endl << endl;
+	c[0] = 'Y';
+	cout << a << endl << b << endl << c << endl << endl;
+}
+
 int main() {
 	// testStrings();
 	// palindrome();
 	// countWords();
-	calculator();
+	// calculator();
+	testOverflow();
 	return 0;
 }
 
