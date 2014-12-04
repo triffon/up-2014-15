@@ -123,7 +123,7 @@ void testMatrices() {
 }
 
 void diagonals() {
-	int b[MAX][MAX] = { 0 };
+	int b[MAX][MAX] = { 0 }, c[MAX][MAX] = { 0 };
 	int n;
 	cout << "n = "; cin >> n;
 	int count = 1;
@@ -134,6 +134,10 @@ void diagonals() {
 		for(int j = 0; j <= i; j++)
 			b[i-j][j] = count++;
 
+	for(int j = 1; j < n; j++)
+		// j е колоната, от която започва диагоналът
+		for(int i = n - 1; i >= j; i--)
+			b[i][n-1-(i-j)] = count++;
 
 	for(int i = 0; i < n; i++) {
 		for(int j = 0; j < n; j++)
@@ -141,6 +145,25 @@ void diagonals() {
 		cout << endl;
 	}
 
+	count = 1;
+
+	// ...
+	/*
+	for(int j = n - 1; j >= 0; j--)
+		// j е колоната, от която започва диагоналът
+		for(int i = n - 1; i >= n - 1 - j / 2; i--)
+			c[i][i+j-(n-1)] = count++;
+			*/
+	for(int j = n - 1; j >= 0; j--)
+		// j е колоната, от която започва диагоналът
+		for(int i = n - 1, k = j; i + k >= n - 1; i--, k--)
+			c[i][k] = count++;
+
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < n; j++)
+			cout << c[i][j] << '\t';
+		cout << endl;
+	}
 }
 
 int main() {
