@@ -54,9 +54,40 @@ void testArea() {
 	cout << "S = " << triarea(x1, y1, x2, y2, x3, y3) << endl;
 }
 
+int f(int x) {
+	x += 5;
+	return x * 2;
+}
+
+int g(int x) {
+	return x + 1;
+}
+
+int x = 10;
+
+void askToIncrease(int delta) {
+	cout << "Да увелича ли x с " << delta << "?";
+	char c;
+	cin >> c;
+	if (c == 'y')
+		x += delta;
+}
+
+int counter() {
+	static int count = 0;
+	count++;
+	return count;
+}
+
 int main() {
 	// printSquared(readNumber(1, 5+5));
-	testArea();
+	// testArea();
+	cout << f(g(x)) << endl;
+	cout << x << endl;
+	askToIncrease(3);
+	cout << "x = " << x << endl;
+	for(int i = 1; i <= 10; i++)
+		cout << counter() << endl;
 	return 0;
 }
 
