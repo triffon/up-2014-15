@@ -166,10 +166,61 @@ void testReferences() {
 	ambiguous((double)65);
 }
 
+void printArray(int a[], int n) {
+	for(int i = 0; i < n; i++)
+		cout << a[i] << ' ';
+	cout << endl;
+}
+
+void readArray(int* a, int n) {
+	for(int i = 0; i < n; i++) {
+		cout << "a[" << i << "] = ";
+		cin >> a[i];
+	}
+}
+
+bool found(int a[], int n, int x) {
+	int i = 0;
+	while (i < n && a[i] != x)
+		i++;
+	return i < n;
+}
+
+void findMinMax(int a[], int n, int& min, int& max) {
+	min = max = a[0];
+	for(int i = 1; i < n; i++) {
+		if (a[i] < min)
+			min = a[i];
+		if (a[i] > max)
+			max = a[i];
+	}
+}
+
+void testArrays() {
+	int a[10];
+	for(int i = 0; i < 10; i++)
+		a[i] = 2 * i;
+
+	printArray(a, 10);
+	printArray(a, 5);
+	// !!! printArray(a, 20);
+	readArray(a, 8);
+	printArray(a, 10);
+
+	cout << found(a, 10, 7) << endl;
+
+	int min, max;
+	findMinMax(a, 10, min, max);
+
+	cout << "min = " << min << endl;
+	cout << "max = " << max << endl;
+}
+
 int main() {
 	// printSquared(readNumber(1, 5+5));
 	// testArea();
 	// testVariables();
-	testReferences();
+	// testReferences();
+	testArrays();
 	return 0;
 }
