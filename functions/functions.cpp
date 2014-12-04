@@ -79,16 +79,97 @@ int counter() {
 	return count;
 }
 
-int main() {
-	// printSquared(readNumber(1, 5+5));
-	// testArea();
+void mult2(int& k) {
+	k *= 2;
+}
+
+void testVariables() {
 	cout << f(g(x)) << endl;
 	cout << x << endl;
 	askToIncrease(3);
 	cout << "x = " << x << endl;
 	for(int i = 1; i <= 10; i++)
 		cout << counter() << endl;
-	return 0;
+}
+
+void myswap(int& x, int& y) {
+	int tmp = x;
+	x = y;
+	y = tmp;
+}
+
+void myswap(double& p, double& q) {
+	double tmp = p;
+	p = q;
+	q = tmp;
+}
+
+void myswap(char& p, char& q) {
+	char tmp = p;
+	p = q;
+	q = tmp;
+}
+
+/*
+template <typename T>
+void myswap(T& x, T& y) {
+	T tmp = x;
+	x = y;
+	y = tmp;
+}
+*/
+
+void ambiguous(char p) {
+	cout << "Char: " << p << endl;
+}
+
+void ambiguous(double p) {
+	cout << "Double: " << p << endl;
 }
 
 
+void testReferences() {
+	cout << "x = " << x << endl;
+	mult2(x);
+	cout << "x = " << x << endl;
+
+	int y = 18;
+	cout << "y = " << y << endl;
+	mult2(y);
+	cout << "y = " << y << endl;
+
+	// !!! mult2(3);
+	mult2(y += 4);
+	cout << "y = " << y << endl;
+
+	int a = 3, b = 4, c = 5;
+	cout << "a,b,c = " << a << ',' << b << ',' << c << endl;
+	myswap(a, b);
+	cout << "a,b,c = " << a << ',' << b << ',' << c << endl;
+	myswap(a, c);
+	cout << "a,b,c = " << a << ',' << b << ',' << c << endl;
+
+
+	// double p = 1.2, q = 2.3, r = 3.4;
+	char p = 'p', q = 'q', r = 'r';
+
+	cout << "p,q,r = " << p << ',' << q << ',' << r << endl;
+	myswap(p, q);
+	cout << "p,q,r = " << p << ',' << q << ',' << r << endl;
+	myswap(p, r);
+	cout << "p,q,r = " << p << ',' << q << ',' << r << endl;
+
+	ambiguous('a');
+	ambiguous(1.2);
+	// !!! ambiguous(65);
+	ambiguous((char)65);
+	ambiguous((double)65);
+}
+
+int main() {
+	// printSquared(readNumber(1, 5+5));
+	// testArea();
+	// testVariables();
+	testReferences();
+	return 0;
+}
