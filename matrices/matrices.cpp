@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 const int MAX = 100;
@@ -166,9 +167,66 @@ void diagonals() {
 	}
 }
 
+void printMatrix(int a[][MAX], int m, int n) {
+	for(int i = 0; i < m; i++) {
+		for(int j = 0; j < n; j++)
+			cout << a[i][j] << '\t';
+		cout << endl;
+	}
+}
+
+void readMatrix(int a[][MAX], int m, int n) {
+	for(int i = 0; i < m; i++)
+		for(int j = 0; j < n; j++) {
+			cout << "a[" << i << "][" << j << "] = ";
+			cin >> a[i][j];
+		}
+}
+
+void testMatrixFunctions() {
+	int a[MAX][MAX];
+	// ЛОШО! readMatrix((int (*)[10])a, 3, 3);
+	readMatrix(a, 3, 3);
+	printMatrix(a, 3, 3);
+}
+
+void readStringArray(char as[][MAX], int n) {
+	for(int i = 0; i < n; i++) {
+		cout << "as[" << i << "] = ";
+		cin.getline(as[i], MAX);
+	}
+}
+
+bool findWord(char as[][MAX], int n, char const* word) {
+	int i = 0;
+//	while (i < n && strcmp(as[i], word) != 0)
+	while (i < n && strcmp(as[i], word))
+		i++;
+	// да - strcmp(as[i], word) == 0
+	// не - i == n
+	return i < n;
+}
+
+void testFindWord() {
+	char as[MAX][MAX];
+	char word[MAX];
+	int n;
+	cout << "n = "; cin >> n;
+	cin.ignore();
+	readStringArray(as, n);
+	cout << "word = ";
+	cin.getline(word, MAX);
+	if (findWord(as, n, word))
+		cout << "Среща се!\n";
+	else
+		cout << "Не се среща!\n";
+}
+
 int main() {
 	// testMatrices();
-	diagonals();
+	// diagonals();
+	// testMatrixFunctions();
+	testFindWord();
 	return 0;
 }
 
