@@ -183,12 +183,59 @@ void testReferences() {
 	 */
 }
 
+// !!!
+int* returnPointerBad(int m) {
+	int n = m * m;
+	return &m;
+}
+
+int& returnReferenceBad(int m) {
+	int n = m + m;
+	return n;
+	return m;
+	// !!! return 3;
+}
+
+int& middle( int& x, int& y, int& z) {
+	if (x <= y && y <= z || z <= y && y <= x)
+		return y;
+	if (y <= z && z <= x || x <= z && z <= y)
+		return z;
+	return x;
+}
+
+void testReturns() {
+	// !!!
+	int* p = returnPointerBad(3);
+	// returnPointerBad(5);
+	cout << *p << endl;
+
+	int a = 10, b = 30, c = 20;
+	middle(a, b, c) = 5;
+	cout << a << ' ' << b << ' ' << c << endl;
+}
+
+char const* strdiff(char const* s1, char const* s2) {
+	while (*s1 != '\0' && *s2 != '\0' && *s1 == *s2) {
+		s1++;
+		s2++;
+	}
+	// *s1 == '\0' || *s2 == '\0' (някой от низовете е свършил)
+	// *s1 != *s2 (намираме първото различие)
+	if (*s1 == *s2)
+		// низовете са равни!
+		return NULL;
+	return s1;
+}
+
 int main() {
 	// testPointers();
 	// test_strchr();
 	// testConstants();
 	// testVoidStar();
-	testReferences();
+	// testReferences();
+	testReturns();
+	cout << strdiff("Hello, world!", "Hello, C++!");
 	return 0;
 }
 
