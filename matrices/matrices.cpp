@@ -208,8 +208,8 @@ bool findWord(char as[][MAX], int n, char const* word) {
 }
 
 void testFindWord() {
-	char as[MAX][MAX];
-	char word[MAX];
+	char as[MAX][MAX] = {0};
+	char word[MAX] = {0};
 	int n;
 	cout << "n = "; cin >> n;
 	cin.ignore();
@@ -220,6 +220,23 @@ void testFindWord() {
 		cout << "Среща се!\n";
 	else
 		cout << "Не се среща!\n";
+}
+
+// !!!double c[MAX][MAX] = { 0 };
+
+// !!!! void multiplyMatrices(double a[m][n], double b[n][k], double c[m][k])
+void multiplyMatrices(double a[][MAX],
+					  double b[][MAX],
+					  double c[][MAX],
+					  int m, int n, int k) {
+	// !!! int c[MAX][MAX];
+	for(int i = 0; i < m; i++)
+		for(int j = 0; j < k; j++) {
+			c[i][j] = 0;
+			// Да сметнем c[i][j]
+			for(int l = 0; l < n; l++)
+				c[i][j] += a[i][l]*b[l][j];
+		}
 }
 
 int main() {
