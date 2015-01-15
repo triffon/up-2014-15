@@ -116,22 +116,32 @@ double calculate(char const*& expr) {
 
 // след приключване на функцията calculate
 // expr сочи СЛЕД края на израза
-bool calculateLogic(char const*& expr) {
+bool calculateLogic(char const*& expr, bool skip) {
 	if (*expr == '0' || *expr == '1')
 		return *expr++ - '0';
 
 	expr++; // прескачаме (
-	bool left = calculateLogic(expr);
+	bool left = calculateLogic(expr, skip);
 	// expr сочи към операцията
 	char op = *expr++;
-	bool right = calculateLogic(expr);
+	bool result = false;
+	if (op == '&' && !left) {
+		skip = true;
+		result = false;
+	}
+	if (op == '|' && left) {
+		skip = true;
+		result = true;
+	}
+	bool right = calculateLogic(expr, skip);
 	// expr сочи към ), прескачаме я
 	expr++;
-	switch (op) {
-	case '&' : return left && right;
-	case '|' : return left || right;
-	default : return false;
-	}
+	if (!skip)
+		switch (op) {
+		case '&' : result = left && right; break;
+		case '|' : result = left || right; break;
+		}
+	return result;
 }
 
 
@@ -146,7 +156,7 @@ void testCalculateLogic() {
 	char expr[MAX];
 	cin.getline(expr, MAX);
 	char const* p = expr;
-	cout << calculateLogic(p);
+	cout << calculateLogic(p, false);
 }
 
 void testRecursion() {
