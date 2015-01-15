@@ -209,6 +209,33 @@ bool foundBetter(int a[], int n, int x) {
 	return n != 0 && (a[0] == x || foundBetter(a + 1, n - 1, x));
 }
 
+bool monotone(int a[], int n) {
+	return n < 2 || (a[n - 1] >= a[n - 2] && monotone(a, n - 1));
+}
+
+int& my_min(int& x, int& y) {
+	return x < y ? x : y;
+}
+
+void my_swap(int& x, int& y) {
+	int tmp = x;
+	x = y;
+	y = tmp;
+}
+
+int& minArray(int a[], int n) {
+	if (n == 1)
+		return a[0];
+	return my_min(a[0], minArray(a + 1, n - 1));
+}
+
+void selectionSort(int a[], int n) {
+	if (n < 2)
+		return;
+	my_swap(a[0], minArray(a, n));
+	selectionSort(a + 1, n - 1);
+}
+
 void testRecursionArrays() {
 	int a[MAX] = { 0 };
 	int n;
@@ -220,8 +247,10 @@ void testRecursionArrays() {
 	cout << "x = ";cin >> x;
 	cout << "Found x? " << found(a, n, x) << endl;
 	cout << "Found x? " << foundBetter(a, n, x) << endl;
-	/*
 	cout << "Monotone? " << monotone(a, n) << endl;
+	selectionSort(a, n);
+	printArray(a, n);
+	/*
 	cout << "Different? " << different(a, n) << endl;
 	*/
 }
