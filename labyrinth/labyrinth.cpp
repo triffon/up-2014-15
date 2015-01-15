@@ -37,10 +37,11 @@ void findStart(int& x, int& y) {
 
 // findTreasure(x, y) == true <->
 //          можем от (x, y) да достигнем до съкровището
-bool findTreasure(int x, int y) {
+bool findTreasure(int x, int y, int move) {
 	cout << "Пробваме да стъпим на (" << x << "," << y << ")" << endl;
 	if (x < 0 || y < 0 || x >= m || y >= n ||
-			labyrinth[x][y] == '*' || labyrinth[x][y] == '"')
+			labyrinth[x][y] == '*' ||
+			labyrinth[x][y] >= '0' && labyrinth[x][y] <= '9')
 		// лесен лош случай
 		return false;
 	if (labyrinth[x][y] == '$') {
@@ -50,18 +51,19 @@ bool findTreasure(int x, int y) {
 		cout << "Направихме " << move << " стъпки!\n";
 		return true;
 	}
-	labyrinth[x][y] = '"';
+	//labyrinth[x][y] = '"';
+	labyrinth[x][y] = '0' + (move % 10);
 	// стъпка надолу
-	if (findTreasure(x + 1, y))
+	if (findTreasure(x + 1, y, move + 1))
 		return true;
 	// стъпка нагоре
-	if (findTreasure(x - 1, y))
+	if (findTreasure(x - 1, y, move + 1))
 		return true;
 	// стъпка наляво
-	if (findTreasure(x, y - 1))
+	if (findTreasure(x, y - 1, move + 1))
 		return true;
 	// стъпка надясно
-	if (findTreasure(x, y + 1))
+	if (findTreasure(x, y + 1, move + 1))
 		return true;
 	labyrinth[x][y] = 'X';
 	return false;
@@ -74,7 +76,7 @@ int main() {
 	findStart(startx, starty);
 	cout << "Започваме от " << "("
 			<< startx << "," << starty << ")\n";
-	cout << findTreasure(startx, starty) << endl;
+	cout << findTreasure(startx, starty, 0) << endl;
 	printLabyrinth();
 	return 0;
 }
