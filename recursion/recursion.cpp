@@ -173,10 +173,64 @@ void testRecursion() {
 	cout << fib(n) << endl;
 }
 
+void readArray(int a[], int n) {
+	if (n == 0)
+		return;
+	cin >> a[0];
+	readArray(a + 1, n - 1);
+}
+
+void printArray(int a[], int n) {
+	if (n == 0)
+		cout << endl;
+	else {
+		cout << a[0] << ' ';
+		printArray(a + 1, n - 1);
+	}
+}
+
+int sumArray(int a[], int n) {
+	if (n == 0)
+		return 0;
+	return a[0] + sumArray(a + 1, n - 1);
+}
+
+bool found(int a[], int n, int x) {
+	if (n == 0)
+		// лесният лош случай
+		return false;
+	if (a[0] == x)
+		// лесният добър случай
+		return true;
+	return found(a + 1, n - 1, x);
+}
+
+bool foundBetter(int a[], int n, int x) {
+	return n != 0 && (a[0] == x || foundBetter(a + 1, n - 1, x));
+}
+
+void testRecursionArrays() {
+	int a[MAX] = { 0 };
+	int n;
+	cout << "n = "; cin >> n;
+	readArray(a, n);
+	printArray(a, n);
+	cout << "Sum = " << sumArray(a, n) << endl;
+ 	int x;
+	cout << "x = ";cin >> x;
+	cout << "Found x? " << found(a, n, x) << endl;
+	cout << "Found x? " << foundBetter(a, n, x) << endl;
+	/*
+	cout << "Monotone? " << monotone(a, n) << endl;
+	cout << "Different? " << different(a, n) << endl;
+	*/
+}
+
 int main() {
 	// testRecursion();
 	// testCalculate();
-	testCalculateLogic();
+	// testCalculateLogic();
+	testRecursionArrays();
 	return 0;
 }
 
