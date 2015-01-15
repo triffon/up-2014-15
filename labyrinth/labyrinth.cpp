@@ -38,15 +38,19 @@ void findStart(int& x, int& y) {
 // findTreasure(x, y) == true <->
 //          можем от (x, y) да достигнем до съкровището
 bool findTreasure(int x, int y) {
+	cout << "Пробваме да стъпим на (" << x << "," << y << ")" << endl;
+	if (x < 0 || y < 0 || x >= m || y >= n ||
+			labyrinth[x][y] == '*' || labyrinth[x][y] == '"')
+		// лесен лош случай
+		return false;
 	if (labyrinth[x][y] == '$') {
 		// лесен хубав случай
 		cout << "Намерихме съкровището на (" << x <<
 				"," << y << ")!\n";
+		cout << "Направихме " << move << " стъпки!\n";
 		return true;
 	}
-	if (labyrinth[x][y] == '*')
-		// лесен лош случай
-		return false;
+	labyrinth[x][y] = '"';
 	// стъпка надолу
 	if (findTreasure(x + 1, y))
 		return true;
@@ -59,6 +63,7 @@ bool findTreasure(int x, int y) {
 	// стъпка надясно
 	if (findTreasure(x, y + 1))
 		return true;
+	labyrinth[x][y] = 'X';
 	return false;
 }
 
