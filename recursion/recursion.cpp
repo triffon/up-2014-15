@@ -236,6 +236,47 @@ void selectionSort(int a[], int n) {
 	selectionSort(a + 1, n - 1);
 }
 
+// разделяме масива a на две части относно pivot
+// лява част: <pivot
+// дясна част: >=pivot
+// фукцията връща номера на последния елемент от лявата част
+int split(int a[], int n, int pivot) {
+	int i = 0, j = n - 1;
+	while (i != j) {
+		if (a[i] < pivot)
+			// на мястото си е, минаваме напред
+			i++;
+		else
+			// a[i] не си е на мястото!
+			if (a[j] >= pivot)
+				// на мястото си е, минаваме назад
+				j--;
+			else
+				// a[i] и a[j] не са си на мястото!!!
+				// разменяме ги тогава
+				my_swap(a[i], a[j]);
+	}
+	// i == j
+	if (a[i] < pivot)
+		return i;
+	return i - 1;
+}
+
+void quickSort(int a[], int n) {
+	if (n < 2)
+		return;
+	// разделяме масива на две части относно оста a[0]
+	int k = split(a + 1, n - 1, a[0]) + 1;
+	// split връща последният елемент на лявата част
+	// (т.е. последния от елементите <a[0])
+	// разменяме оста с този последен елемент
+	my_swap(a[0], a[k]);
+	// сортираме лявата част
+	quickSort(a, k);
+	// сортираме дясната част
+	quickSort(a + k + 1, n - k - 1);
+}
+
 void testRecursionArrays() {
 	int a[MAX] = { 0 };
 	int n;
@@ -248,7 +289,8 @@ void testRecursionArrays() {
 	cout << "Found x? " << found(a, n, x) << endl;
 	cout << "Found x? " << foundBetter(a, n, x) << endl;
 	cout << "Monotone? " << monotone(a, n) << endl;
-	selectionSort(a, n);
+	// selectionSort(a, n);
+	quickSort(a, n);
 	printArray(a, n);
 	/*
 	cout << "Different? " << different(a, n) << endl;
