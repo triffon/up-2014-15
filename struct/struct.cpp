@@ -111,12 +111,26 @@ double averageGrade(Student s[], int n) {
 	return sum / n;
 }
 
+void sortStudents(Student s[], int n) {
+	for(int i = 0; i < n - 1; i++) {
+		int mini = i;
+		for(int j = i + 1; j < n; j++)
+			if (s[j].fn < s[mini].fn)
+				mini = j;
+		Student tmp = s[i];
+		s[i] = s[mini];
+		s[mini] = tmp;
+	}
+}
+
 void testSusi() {
 	Student susi[MAX];
 
 	int nStudents = readStudents(susi);
 	printStudentTable(susi, nStudents);
 	cout << "Среден успех: " << averageGrade(susi, nStudents) << endl;
+	sortStudents(susi, nStudents);
+	printStudentTable(susi, nStudents);
 }
 
 int main() {
