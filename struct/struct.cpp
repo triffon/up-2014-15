@@ -74,7 +74,53 @@ void testStruct() {
 	printTeam(t);
 }
 
+void readStudent(Student& s) {
+	cout << "Име: ";
+	cin.getline(s.name, MAX);
+	cout << "Ф№: ";cin >> s.fn;
+	cout << "Успех: ";cin >> s.grade;
+}
+
+int readStudents(Student s[]) {
+	int n = 0;
+	char more;
+	do {
+		cout << "Моля, въведете студент:\n";
+		readStudent(s[n]);
+		cout << "Още студенти?"; cin >> more;cin.get();
+		n++;
+	} while(more == 'y');
+	return n;
+}
+
+void printStudentLine(Student const& s) {
+	cout << s.fn << '\t' << s.grade << '\t' << s.name << '\n';
+}
+
+void printStudentTable(Student s[], int n) {
+	cout << "\nФ№\tОценка\tИме\n";
+	cout << "----------------------------------\n";
+	for(int i = 0; i < n; i++)
+		printStudentLine(s[i]);
+}
+
+double averageGrade(Student s[], int n) {
+	double sum = 0;
+	for(int i = 0; i < n; i++)
+		sum += s[i].grade;
+	return sum / n;
+}
+
+void testSusi() {
+	Student susi[MAX];
+
+	int nStudents = readStudents(susi);
+	printStudentTable(susi, nStudents);
+	cout << "Среден успех: " << averageGrade(susi, nStudents) << endl;
+}
+
 int main() {
-	testStruct();
+	// testStruct();
+	testSusi();
 	return 0;
 }
