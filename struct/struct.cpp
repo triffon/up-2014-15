@@ -123,15 +123,70 @@ void sortStudents(Student s[], int n) {
 	}
 }
 
+void initializeView(Student s[], Student* ps[], int n) {
+	for(int i = 0; i < n; i++)
+		ps[i] = &s[i];
+}
+
+bool lessThanByFN(Student const& s1, Student const& s2) {
+	return s1.fn < s2.fn;
+}
+
+bool lessThanByGrade(Student const& s1, Student const& s2) {
+	return s1.grade < s2.grade;
+}
+
+bool lessThanByName(Student const& s1, Student const& s2) {
+	return strcmp(s1.name, s2.name) < 0;
+}
+
+typedef bool (*CompareFunction)(Student const&, Student const&);
+
+void sortStudentsView(Student* ps[], int n,
+					  CompareFunction lessThan) {
+	for(int i = 0; i < n - 1; i++) {
+		int mini = i;
+		for(int j = i + 1; j < n; j++)
+			if (lessThan(*ps[j], *ps[mini]))
+				mini = j;
+		Student* tmp = ps[i];
+		ps[i] = ps[mini];
+		ps[mini] = tmp;
+	}
+}
+
+void printStudentsView(Student* ps[], int n) {
+	cout << "\nФ№\tОценка\tИме\n";
+	cout << "----------------------------------\n";
+	for(int i = 0; i < n; i++)
+		printStudentLine(*ps[i]);
+}
+
 void testSusi() {
 	Student susi[MAX];
 
 	int nStudents = readStudents(susi);
 	printStudentTable(susi, nStudents);
 	cout << "Среден успех: " << averageGrade(susi, nStudents) << endl;
-	sortStudents(susi, nStudents);
-	printStudentTable(susi, nStudents);
+	// sortStudents(susi, nStudents);
+	// printStudentTable(susi, nStudents);
+
+	Student* susiSortedView[MAX];
+	initializeView(susi, susiSortedView, nStudents);
+	sortStudentsView(susiSortedView, nStudents, lessThanByFN);
+	printStudentsView(susiSortedView, nStudents);
+	sortStudentsView(susiSortedView, nStudents, lessThanByGrade);
+	printStudentsView(susiSortedView, nStudents);
+	sortStudentsView(susiSortedView, nStudents, lessThanByName);
+	printStudentsView(susiSortedView, nStudents);
 }
+
+/*
+struct Employee {
+	char name[100];
+	Employee boss;
+};
+*/
 
 int main() {
 	// testStruct();
