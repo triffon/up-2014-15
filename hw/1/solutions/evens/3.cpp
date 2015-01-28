@@ -112,7 +112,6 @@ char* reverseSentence(char* rev, const char* s)
                 strncat(rev, end, 1);
 
             strncat(rev, end + 1, 1);
-            end--;
         }
     }
     while (end >= s);
