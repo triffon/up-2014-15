@@ -28,7 +28,7 @@ bool isWordChar(char c)
     return c == '(' || c == ')' || c == '-' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
 }
 
-char* skipWhitespaceReverse(const char* s)
+const char* skipWhitespaceReverse(const char* s)
 {
     while (*s == ' ')
         s--;
@@ -36,7 +36,7 @@ char* skipWhitespaceReverse(const char* s)
     return s;
 }
 
-char* goToEnd(const char* s)
+const char* goToEnd(const char* s)
 {    
     while (*s)
         s++;
@@ -67,7 +67,7 @@ char* reverseSentence(const char* s)
     if (!s)
         return NULL;
 
-    char* end = goToEnd(s);
+    const char* end = goToEnd(s);
     end--;
 
     if (end < s || *end != '!' && *end != '.' && *end != '?')
@@ -75,8 +75,7 @@ char* reverseSentence(const char* s)
 
     end--;
 
-    char rev[MAX_SIZE];
-    char* beg = end;
+    const char* beg = end;
     bool is_first = true;
 
     while (beg >= s)
