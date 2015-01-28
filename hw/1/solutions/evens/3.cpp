@@ -76,26 +76,24 @@ char* reverseSentence(char* rev, const char* s)
 
     end--;
 
-    const char* beg = end;
-    bool is_first = true;
-
-    while (beg >= s)
+    do
     {
+        const char* beg = end;
+    
         while (beg >= s && isWordChar(*beg))
             beg--;
 
         if (beg == end)
             return NULL;
 
-        beg++;
-
-        if (beg < s)
+        if (beg++ < s)
         {
             char first[2];
             strncat(first, beg, 1);
             *first = toLower(*first);
             strcat(rev, first);
             strncat(rev, beg + 1, end - beg);
+            end = beg - 1;
         }
         else
         {
@@ -114,8 +112,10 @@ char* reverseSentence(char* rev, const char* s)
                 strncat(rev, end, 1);
 
             strncat(rev, end + 1, 1);
+            end--;
         }
     }
+    while (end >= s);
 
     *rev = toUpper(*rev);
     char *p = rev, *lp = NULL;
