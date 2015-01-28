@@ -143,6 +143,15 @@ char* reverseSentence(char* rev, const char* s)
         p++;
     }
 
-    cout << rev << endl;
+    return rev;
+}
+
+int main()
+{
+    char s[MAX_SIZE], rev[MAX_SIZE];
+    cin.getline(s, MAX_SIZE);
+
+    cout << reverseSentence(rev, s) << endl;
+
     return 0;
 }
