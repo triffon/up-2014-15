@@ -62,7 +62,7 @@ void swap(char* a, char* b)
 }
 
 // Ако изречението е невалидно, връщаме NULL
-char* reverseSentence(const char* s)
+char* reverseSentence(char* rev, const char* s)
 {
     if (!s)
         return NULL;
