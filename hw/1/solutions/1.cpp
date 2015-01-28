@@ -74,7 +74,7 @@ int main()
     int n, m;
 
     cin >> n >> m;
-    cout << (are_equal_for_all ? "Yes" : "No");
+    cout << (are_equal_for_all(n, m) ? "Yes" : "No");
 
     return 0;
 }
