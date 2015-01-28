@@ -121,7 +121,7 @@ char* reverseSentence(char* rev, const char* s)
     char *p = rev, *lp = NULL;
     int b = 0;
 
-    while (p)
+    while (*p)
     {
         if (*p == '(')
         {
