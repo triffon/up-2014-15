@@ -19,6 +19,8 @@
 #include <iostream>
 using namespace std;
 
+const double EPS = 0.001;
+
 int fact(int n)
 {
     int P = 1;
@@ -27,6 +29,11 @@ int fact(int n)
         P *= i;
 
     return P;
+}
+
+bool eq(double a, double b)
+{
+    return a - b > -EPS && a - b < EPS;
 }
 
 bool areEqual(int n, int m)
@@ -48,7 +55,7 @@ bool areEqual(int n, int m)
     for (int i = n + 1; i <= n + m; i++)
         P *= i;
 
-    return S == 1 / (double) m * (1 / (double) fact(m) - 1 / (double) P);
+    return eq(S, 1 / (double) m * (1 / (double) fact(m) - 1 / (double) P));
 }
 
 bool areEqualForAll(int a, int b)
