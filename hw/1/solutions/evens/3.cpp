@@ -89,8 +89,9 @@ char* reverseSentence(char* rev, const char* s)
         if (beg++ < s)
         {
             char first[2];
-            strncat(first, beg, 1);
-            *first = toLower(*first);
+            first[0] = *beg;
+            first[1] = 0;
+            first[0] = toLower(first[0]);
             strcat(rev, first);
             strncat(rev, beg + 1, end - beg);
             end = beg - 1;
