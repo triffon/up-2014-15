@@ -29,14 +29,6 @@ bool isWordChar(char c)
     return c == '(' || c == ')' || c == '-' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
 }
 
-const char* goToEnd(const char* s)
-{    
-    while (*s)
-        s++;
-
-    return s;
-}
-
 char toUpper(char c)
 {
     return c >= 'a' && c <= 'z' ? c - diff : c;
@@ -52,6 +44,14 @@ void swap(char* a, char* b)
     char x = *a;
     *a = *b;
     *b = x;
+}
+
+const char* goToEnd(const char* s)
+{ 
+    while (*s)
+        s++;
+
+    return s;
 }
 
 // Ако изречението е невалидно, връщаме NULL
