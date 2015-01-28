@@ -24,9 +24,12 @@ const int MAX_SIZE = 1000;
 
 int hamming_distance(const char* a, const char* b)
 {
+    if (!a || !b)
+        return 0;
+
     int n = 0;
 
-    while (a && b)
+    while (*a && *b)
     {
         if (*a != *b)
             n++;
