@@ -17,6 +17,7 @@
  */
 
 #include <iostream>
+
 using namespace std;
 
 const double EPS = 0.001;
@@ -36,7 +37,7 @@ bool eq(double a, double b)
     return a - b > -EPS && a - b < EPS;
 }
 
-bool areEqual(int n, int m)
+bool are_equal(int n, int m)
 {
     double S = 0;
 
@@ -58,11 +59,11 @@ bool areEqual(int n, int m)
     return eq(S, 1 / (double) m * (1 / (double) fact(m) - 1 / (double) P));
 }
 
-bool areEqualForAll(int a, int b)
+bool are_equal_for_all(int a, int b)
 {
     for (int i = 1; i <= a; i++)
         for (int j = 1; j <= b; j++)
-            if (!areEqual(i, j))
+            if (!are_equal(i, j))
                 return false;
 
     return true;
@@ -73,7 +74,7 @@ int main()
     int n, m;
 
     cin >> n >> m;
-    cout << (areEqualForAll(n, m) ? "Yes" : "No");
+    cout << (are_equal_for_all ? "Yes" : "No");
 
     return 0;
 }
