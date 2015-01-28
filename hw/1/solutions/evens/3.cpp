@@ -74,6 +74,9 @@ char* reverseSentence(char* rev, const char* s)
     if (end < s || *end != '!' && *end != '.' && *end != '?')
         return NULL;
 
+    char stop[2];
+    stop[0] = *end;
+    stop[1] = 0;
     end--;
 
     do
@@ -117,6 +120,7 @@ char* reverseSentence(char* rev, const char* s)
     }
     while (end >= s);
 
+    strcat(rev, stop);
     *rev = toUpper(*rev);
     char *p = rev, *lp = NULL;
     int b = 0;
