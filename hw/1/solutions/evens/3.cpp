@@ -29,14 +29,6 @@ bool isWordChar(char c)
     return c == '(' || c == ')' || c == '-' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
 }
 
-const char* skipWhitespaceReverse(const char* s)
-{
-    while (*s == ' ')
-        s--;
-
-    return s;
-}
-
 const char* goToEnd(const char* s)
 {    
     while (*s)
