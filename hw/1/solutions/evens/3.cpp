@@ -156,7 +156,8 @@ char* reverseSentence(char* rev, const char* s)
     char* firstInnerWordPos = isBeginWordChar(*rev) && !isInnerWordChar(*rev) ? rev + 1 : rev;
     *firstInnerWordPos = toUpper(*firstInnerWordPos);
 
-/*    char *p = rev, *lp = NULL;
+/*
+    char *p = rev, *lp = NULL;
     int b = 0;
 
     while (*p)
@@ -182,6 +183,7 @@ char* reverseSentence(char* rev, const char* s)
         p++;
     }
 */
+
     return rev;
 }
 
