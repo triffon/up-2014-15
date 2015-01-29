@@ -140,7 +140,7 @@ char* reverseSentence(char* rev, const char* s)
             if (beg < s)
                 return NULL;
 
-            if (*beg == ',' || *beg == ':' || *beg == ';' || *beg == '(' || *beg == ')')
+            if (*beg == ',' || *beg == ':' || *beg == ';')
                 strncat(rev, beg, 1);
 
             beg += 2;
