@@ -24,9 +24,19 @@ using namespace std;
 const int MAX_SIZE = 1000;
 const char diff = 'a' - 'A';
 
-bool isWordChar(char c)
+bool isInnerWordChar(char c)
 {
-    return c == '(' || c == ')' || c == '-' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
+    return c == '-' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
+}
+
+bool isBeginWordChar(char c)
+{
+    return isInnerWordChar(c) || c == '"' || c == '\'' || c == '(';
+}
+ 
+bool isEndWordChar(char c)
+{
+    return isInnerWordChar(c) || c == '"' || c == '\'' || c == ')';
 }
 
 char toUpper(char c)
@@ -66,22 +76,37 @@ char* reverseSentence(char* rev, const char* s)
     if (end < s || *end != '!' && *end != '.' && *end != '?')
         return NULL;
 
-    char stop[2];
-    stop[0] = *end;
-    stop[1] = 0;
+    const char* stop = end;
     end--;
+
+    if (end < s)
+        return NULL;
 
     do
     {
-        const char* beg = end;
-    
-        while (beg >= s && isWordChar(*beg))
-            beg--;
+        const char *beg = end;
 
-        if (beg == end)
+        if (!isEndWordChar(*beg))
             return NULL;
 
-        if (beg++ < s)
+        beg--;
+
+        while (beg >= s && isInnerWordChar(*beg))
+            beg--;
+
+        if (beg < s || !isBeginWordChar(*beg))
+            beg++;
+
+        if (isInnerWordChar(*beg) && !isInnerWordChar(*end))
+            if (*end != ')')
+                strncat(rev, end, 1);
+            else
+                strcat(rev, "(");
+
+        if (!isInnerWordChar(*beg) && isInnerWordChar(*end))
+            beg++;
+
+        if (beg == s)
         {
             char first[2];
             first[0] = *beg;
@@ -89,30 +114,39 @@ char* reverseSentence(char* rev, const char* s)
             first[0] = toLower(first[0]);
             strcat(rev, first);
             strncat(rev, beg + 1, end - beg);
-            end = beg - 1;
         }
         else
         {
             strncat(rev, beg, end - beg + 1);
-            end = beg - 1;
+            beg--;
 
-            if (*end != ' ')
+            if (*beg != ' ')
                 return NULL;
 
-            end--;
+            beg--;
 
-            if (end < s)
+            if (beg < s)
                 return NULL;
 
-            if (*end == ',' || *end == ':' || *end == ';')
-                strncat(rev, end, 1);
+            if (*beg == ',' || *beg == ':' || *beg == ';' || *beg == '(' || *beg == ')')
+                strncat(rev, beg, 1);
 
-            strncat(rev, end + 1, 1);
+            strncat(rev, beg + 1, 1);
         }
+
+        const char* lpos = beg + 2;
+
+        if (isInnerWordChar(*end) && !isInnerWordChar(*beg))
+            if (*beg != '(')
+                strncat(rev, beg, 1);
+            else
+                strcat(rev, ")");
+
+        end = beg - 1;
     }
     while (end >= s);
 
-    strcat(rev, stop);
+    strncat(rev, stop, 1);
     *rev = toUpper(*rev);
     char *p = rev, *lp = NULL;
     int b = 0;
