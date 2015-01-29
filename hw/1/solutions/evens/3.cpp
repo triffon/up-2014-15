@@ -64,6 +64,17 @@ const char* goToEnd(const char* s)
     return s;
 }
 
+char* appendBegin(char* rev, const char* beg, const char* end)
+{
+    if (isInnerWordChar(*end) && isBeginWordChar(*beg) && !isInnerWordChar(*beg))
+        if (*beg != '(')
+            strncat(rev, beg, 1);
+        else
+            strcat(rev, ")");
+
+    return rev;
+}
+
 // Ако изречението е невалидно, връщаме NULL
 char* reverseSentence(char* rev, const char* s)
 {
@@ -113,7 +124,8 @@ char* reverseSentence(char* rev, const char* s)
             first[1] = 0;
             first[0] = toLower(first[0]);
             strcat(rev, first);
-            strncat(rev, beg + 1, end - beg);
+            strncat(rev, beg + 1, (!isInnerWordChar(*end) ? end - 1 : end) - beg);
+            appendBegin(rev, beg - 1, end);
         }
         else
         {
@@ -136,13 +148,9 @@ char* reverseSentence(char* rev, const char* s)
 
             strncat(rev, beg + 1, 1);
             beg += 2;
+            appendBegin(rev, beg, end);
+            strncat(rev, beg - 1, 1);
         }
-
-        if (isInnerWordChar(*end) && isBeginWordChar(*beg) && !isInnerWordChar(*beg))
-            if (*beg != '(')
-                strncat(rev, beg, 1);
-            else
-                strcat(rev, ")");
 
         end = beg - 2;
     }
