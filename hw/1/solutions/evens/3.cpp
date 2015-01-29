@@ -114,10 +114,7 @@ char* reverseSentence(char* rev, const char* s)
             else
                 strcat(rev, "(");
 
-        if (isInnerWordChar(*end) && !isInnerWordChar(*beg))
-            beg++;
-
-        if (beg == s)
+        if ((isInnerWordChar(*end) && !isInnerWordChar(*beg) ? beg++ : beg) == s)
         {
             char first[2];
             first[0] = *beg;
@@ -129,7 +126,7 @@ char* reverseSentence(char* rev, const char* s)
         }
         else
         {
-            strncat(rev, beg, end - beg + 1);
+            strncat(rev, beg, (!isInnerWordChar(*end) ? end - 1 : end) - beg + 1);
             beg--;
 
             if (isInnerWordChar(*end) && isBeginWordChar(*beg) && !isInnerWordChar(*beg))
@@ -146,7 +143,6 @@ char* reverseSentence(char* rev, const char* s)
             if (*beg == ',' || *beg == ':' || *beg == ';' || *beg == '(' || *beg == ')')
                 strncat(rev, beg, 1);
 
-            strncat(rev, beg + 1, 1);
             beg += 2;
             appendBegin(rev, beg, end);
             strncat(rev, beg - 1, 1);
@@ -157,7 +153,9 @@ char* reverseSentence(char* rev, const char* s)
     while (end >= s);
 
     strncat(rev, stop, 1);
-    *rev = toUpper(*rev);
+    char* firstInnerWordPos = isBeginWordChar(*rev) && !isInnerWordChar(*rev) ? rev + 1 : rev;
+    *firstInnerWordPos = toUpper(*firstInnerWordPos);
+
 /*    char *p = rev, *lp = NULL;
     int b = 0;
 
