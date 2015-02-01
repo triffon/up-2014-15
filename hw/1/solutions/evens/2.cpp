@@ -24,6 +24,9 @@ const size_t MAX_SIZE = 1000;
 
 void write_primes(size_t n)
 {
+    if (n < 2)
+        return;
+
     size_t a[MAX_SIZE];
 
     for (size_t i = 2; i <= n; i++)
