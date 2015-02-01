@@ -22,31 +22,46 @@
 using namespace std;
 
 const int MAX_SIZE = 1000;
-const char diff = 'a' - 'A';
+const char CASE_CHARSET_DIFF = 'a' - 'A', WORD_DELIMITER = ' ';
 
 bool isInnerWordChar(char c)
 {
     return c == '-' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
 }
 
-bool isBeginWordChar(char c)
+bool isQuote(char c)
 {
-    return isInnerWordChar(c) || c == '"' || c == '\'' || c == '(';
+    return c == '"' || c == '\'';
 }
- 
-bool isEndWordChar(char c)
+
+bool isLeftMatchedChar(char c)
 {
-    return isInnerWordChar(c) || c == '"' || c == '\'' || c == ')';
+    return isQuote(c) || c == '(';
+}
+
+bool isRightMatchedChar(char c)
+{
+    return isQuote(c) || c == ')';
+}
+
+bool isStopChar(char c)
+{
+    return c == '!' || c == '.' || c == '?';
+}
+
+bool isDelimiterChar(char c)
+{
+    return c == ',' || c == ':' || c == ';';
 }
 
 char toUpper(char c)
 {
-    return c >= 'a' && c <= 'z' ? c - diff : c;
+    return c >= 'a' && c <= 'z' ? c - CASE_CHARSET_DIFF : c;
 }
 
 char toLower(char c)
 {
-    return c >= 'A' && c <= 'Z' ? c + diff : c;
+    return c >= 'A' && c <= 'Z' ? c + CASE_CHARSET_DIFF : c;
 }
 
 void swap(char* a, char* b)
@@ -64,15 +79,34 @@ const char* goToEnd(const char* s)
     return s;
 }
 
-char* appendBegin(char* rev, const char* beg, const char* end)
+const char* appendBegin(char* rev, const char* beg, const char* mid)
 {
-    if (isInnerWordChar(*end) && isBeginWordChar(*beg) && !isInnerWordChar(*beg))
-        if (*beg != '(')
-            strncat(rev, beg, 1);
-        else
+    while (mid >= beg)
+    {
+        if (*mid == '(')
             strcat(rev, ")");
+        else
+            strncat(rev, mid, 1);
 
-    return rev;
+        mid--;
+    }
+
+    return mid;
+}
+
+const char* appendEnd(char* rev, const char* s, const char* end)
+{
+    while (end >= s && isRightMatchedChar(*end))
+    {
+        if (*end == ')')
+            strcat(rev, "(");
+        else
+            strncat(rev, end, 1);
+
+        end--;
+    }
+
+    return end;
 }
 
 // Ако изречението е невалидно, връщаме NULL
@@ -81,80 +115,83 @@ char* reverseSentence(char* rev, const char* s)
     if (!s)
         return NULL;
 
-    const char* end = goToEnd(s);
-    end--;
+    const char* end = goToEnd(s) - 1;
 
-    if (end < s || *end != '!' && *end != '.' && *end != '?')
+    if (end < s || !isStopChar(*end))
         return NULL;
 
-    const char* stop = end;
-    end--;
+    const char* stop = end--;
 
     if (end < s)
         return NULL;
 
     do
     {
-        const char *beg = end;
+        const char* mid = end = appendEnd(rev, s, end);
 
-        if (!isEndWordChar(*beg))
+        if (mid < s)
             return NULL;
 
-        beg--;
+        while (mid >= s && isInnerWordChar(*mid))
+            mid--;
 
-        while (beg >= s && isInnerWordChar(*beg))
+        if (mid == end)
+            return NULL;
+
+        const char* beg = mid++;
+        
+        while (beg >= s && isLeftMatchedChar(*beg))
             beg--;
 
-        if (beg < s || !isBeginWordChar(*beg))
-            beg++;
-
-        if (isInnerWordChar(*beg) && !isInnerWordChar(*end))
+/*
+        if (isInnerWordChar(*mid) && !isInnerWordChar(*end))
             if (*end != ')')
                 strncat(rev, end, 1);
             else
                 strcat(rev, "(");
+*/
 
-        if ((isInnerWordChar(*end) && !isInnerWordChar(*beg) ? beg++ : beg) == s)
+        if (++beg == s)
         {
             char first[2];
-            first[0] = *beg;
+            first[0] = *mid;
             first[1] = 0;
             first[0] = toLower(first[0]);
             strcat(rev, first);
-            strncat(rev, beg + 1, (!isInnerWordChar(*end) ? end - 1 : end) - beg);
-            appendBegin(rev, beg - 1, end);
+
+            strncat(rev, mid + 1, end - mid);
+            appendBegin(rev, beg, mid - 1);
         }
         else
         {
-            strncat(rev, beg, (!isInnerWordChar(*end) ? end - 1 : end) - beg + 1);
-            beg--;
+            strncat(rev, mid, end - mid + 1);
+            appendBegin(rev, beg--, mid - 1);
 
-            if (isInnerWordChar(*end) && isBeginWordChar(*beg) && !isInnerWordChar(*beg))
-                beg--;
-
-            if (*beg != ' ')
+            if (*beg != WORD_DELIMITER)
                 return NULL;
 
-            beg--;
-
-            if (beg < s)
+            if (--beg < s)
                 return NULL;
 
-            if (*beg == ',' || *beg == ':' || *beg == ';')
+            if (isDelimiterChar(*beg))
                 strncat(rev, beg, 1);
 
-            beg += 2;
-            appendBegin(rev, beg, end);
-            strncat(rev, beg - 1, 1);
+            strncat(rev, beg + 1, 1);
         }
 
-        end = beg - 2;
+        end = beg - 1;
     }
     while (end >= s);
 
     strncat(rev, stop, 1);
-    char* firstInnerWordPos = isBeginWordChar(*rev) && !isInnerWordChar(*rev) ? rev + 1 : rev;
-    *firstInnerWordPos = toUpper(*firstInnerWordPos);
+
+    char* first = rev;
+
+    while (*first && isLeftMatchedChar(*first))
+        first++;
+
+    if (isInnerWordChar(*first))
+        *first = toUpper(*first);
 
 /*
     char *p = rev, *lp = NULL;
