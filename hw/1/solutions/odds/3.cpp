@@ -76,13 +76,7 @@ char toLower(char c)
 
 const char* goToEndOfWord(const char* s)
 {
-    while (isLeftMatchedChar(*s))
-        s++;
-
     while (isInnerWordChar(*s))
-        s++;
-
-    while (isRightMatchedChar(*s))
         s++;
 
     return s;
@@ -98,9 +92,12 @@ char* reverseWords(char* rev, const char* s)
 
     while (*s && !isStopChar(*s))
     {
+        while (isLeftMatchedChar(*s))
+            *revcur++ = *s++;
+
         const char* end = goToEndOfWord(s);
 
-        if (s == end || *end != WORD_DELIMITER && !isDelimiterChar(*end))
+        if (s == end)
             return NULL;
 
         if (s == --end)
@@ -116,6 +113,12 @@ char* reverseWords(char* rev, const char* s)
 
             *(revcur - 1) = toLower(*(revcur - 1));
         }
+
+        while (isRightMatchedChar(*end))
+            *revcur++ = *end++;
+
+        if (*end != WORD_DELIMITER && !isDelimiterChar(*end) && !isStopChar(*end))
+            return NULL;
 
         *revcur++ = *end;
 
