@@ -161,6 +161,7 @@ char* reverseSentence(char* rev, const char* s)
 
             strncat(rev, mid + 1, end - mid);
             appendBegin(rev, beg, mid - 1);
+            end = beg - 1;
         }
         else
         {
@@ -174,12 +175,15 @@ char* reverseSentence(char* rev, const char* s)
                 return NULL;
 
             if (isDelimiterChar(*beg))
+            {
                 strncat(rev, beg, 1);
+                end = beg - 1;
+            }
+            else
+                end = beg;
 
             strncat(rev, beg + 1, 1);
         }
-
-        end = beg - 1;
     }
     while (end >= s);
 
@@ -233,3 +237,4 @@ int main()
 
     return 0;
 }
+
