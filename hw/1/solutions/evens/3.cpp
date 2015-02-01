@@ -143,14 +143,6 @@ char* reverseSentence(char* rev, const char* s)
         while (beg >= s && isLeftMatchedChar(*beg))
             beg--;
 
-/*
-        if (isInnerWordChar(*mid) && !isInnerWordChar(*end))
-            if (*end != ')')
-                strncat(rev, end, 1);
-            else
-                strcat(rev, "(");
-*/
-
         if (++beg == s)
         {
             char first[2];
@@ -196,34 +188,6 @@ char* reverseSentence(char* rev, const char* s)
 
     if (isInnerWordChar(*revfirst))
         *revfirst = toUpper(*revfirst);
-
-/*
-    char *p = rev, *lp = NULL;
-    int b = 0;
-
-    while (*p)
-    {
-        if (*p == '(')
-        {
-            b++;
-
-            if (lp && b == 0)
-            {
-                swap(p, lp);
-                lp = NULL;
-            }
-        }
-        else if (*p == ')')
-        {
-            b--;
-
-            if (b == -1)
-                lp = p;
-        }
-
-        p++;
-    }
-*/
 
     return rev;
 }
