@@ -72,7 +72,7 @@ void swap(char* a, char* b)
 }
 
 const char* goToEnd(const char* s)
-{ 
+{
     while (*s)
         s++;
 
@@ -189,13 +189,13 @@ char* reverseSentence(char* rev, const char* s)
 
     strncat(rev, stop, 1);
 
-    char* first = rev;
+    char* revfirst = rev;
 
-    while (*first && isLeftMatchedChar(*first))
-        first++;
+    while (*revfirst && isLeftMatchedChar(*revfirst))
+        revfirst++;
 
-    if (isInnerWordChar(*first))
-        *first = toUpper(*first);
+    if (isInnerWordChar(*revfirst))
+        *revfirst = toUpper(*revfirst);
 
 /*
     char *p = rev, *lp = NULL;
