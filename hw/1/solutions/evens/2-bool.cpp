@@ -4,7 +4,7 @@
  *       Filename:  2.cpp
  *
  *    Description:  Solution to the second problem of the `evens' section
- *    (solution that uses bool matrix).
+ *                  (uses bool matrix).
  *
  *        Version:  1.0
  *        Created:  28.01.2015  5,36,07
