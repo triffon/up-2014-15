@@ -20,9 +20,9 @@
 
 using namespace std;
 
-int count(int a, int b)
+size_t count(int a, int b)
 {
-    int n = 0;
+    size_t n = 0;
 
     for (int i = a; i <= b; i++)
     {
@@ -46,4 +46,5 @@ int main()
     cout << count(a, b);
 
     return 0;
-}       
+}
+

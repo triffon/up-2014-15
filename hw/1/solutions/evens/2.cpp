@@ -20,20 +20,20 @@
 
 using namespace std;
 
-const int MAX_SIZE = 1000;
+const size_t MAX_SIZE = 1000;
 
-void write_primes(int n)
+void write_primes(size_t n)
 {
-    int a[MAX_SIZE];
+    size_t a[MAX_SIZE];
 
-    for (int i = 2; i <= n; i++)
+    for (size_t i = 2; i <= n; i++)
         a[i - 2] = i;
 
-    int i = 2;
+    size_t i = 2;
 
     while (i * i <= n)
     {
-        for (int j = i * i; j <= n; j += i)
+        for (size_t j = i * i; j <= n; j += i)
             a[j - 2] = 1;
 
         i++;
@@ -42,7 +42,7 @@ void write_primes(int n)
             i++;
     }
 
-    for (int i = 0; i <= n - 2; i++)
+    for (size_t i = 0; i <= n - 2; i++)
         if (a[i] > 1)
             cout << a[i] << " ";
 
@@ -51,10 +51,11 @@ void write_primes(int n)
 
 int main()
 {
-    int n;
+    size_t n;
     cin >> n;
 
     write_primes(n);
 
     return 0;
 }
+

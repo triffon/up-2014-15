@@ -23,14 +23,14 @@ using namespace std;
 
 const int MAX_SIZE = 1000;
 
-void write_primes(int n)
+void write_primes(size_t n)
 {
     bool a[MAX_SIZE] = {};
-    int i = 2;
+    size_t i = 2;
 
     while (i * i <= n)
     {
-        for (int j = i * i; j <= n; j += i)
+        for (size_t j = i * i; j <= n; j += i)
             a[j - 2] = true;
 
         i++;
@@ -39,7 +39,7 @@ void write_primes(int n)
             i++;
     }
 
-    for (int i = 2; i <= n; i++)
+    for (size_t i = 2; i <= n; i++)
         if (!a[i - 2])
             cout << i << " ";
 
@@ -48,10 +48,11 @@ void write_primes(int n)
 
 int main()
 {
-    int n;
+    size_t n;
     cin >> n;
 
     write_primes(n);
 
     return 0;
 }
+

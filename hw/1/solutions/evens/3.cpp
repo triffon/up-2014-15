@@ -21,7 +21,7 @@
 
 using namespace std;
 
-const int MAX_SIZE = 1000;
+const size_t MAX_SIZE = 1000;
 const char CASE_CHARSET_DIFF = 'a' - 'A', WORD_DELIMITER = ' ';
 
 bool isInnerWordChar(char c)
