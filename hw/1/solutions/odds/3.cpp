@@ -31,7 +31,7 @@ bool isUpperLetter(char c)
 
 bool isLowerLetter(char c)
 {
-    c >= 'a' && c <= 'z';
+    return c >= 'a' && c <= 'z';
 }
 
 bool isInnerWordChar(char c)
