@@ -119,7 +119,7 @@ char* reverseWords(char* rev, const char* s)
 
         *revcur++ = *end;
 
-        if (isDelimiterChar(*end++))
+        if (!isStopChar(*end) && isDelimiterChar(*end++))
         {
             if (*end != WORD_DELIMITER)
                 return NULL;
@@ -133,7 +133,6 @@ char* reverseWords(char* rev, const char* s)
     if (!isStopChar(*s))
         return NULL;
 
-    *revcur++ = *s;
     *revcur = 0;
     return rev;
 }
